@@ -14,17 +14,28 @@
     <header><h2>Memory spel</h2></header>
     <div  class="bord">
       <div class="playerForm">
-            <label for="player1">Player 1</label>
-          <input type="text" id="player1" placeholder="Player 1"></input><br />
-          <label for="player2">Player 2</label>   
-          <input type="text" id="player2" placeholder="Player 2"></input><br />
+        <form id="playerform" name="playerform" action="">
+ 
+            <label>Name:<input id="palyer1name" name="player1name" value="player1"></label>
+            <label>Name:<input id="player2name" name="player2name" value="player2"></label>
+            <label for="deck">Choose your deck</label>
+            <select name="selectDeck" id="selectDeck">
+              <option value="djurgarden">djurgarden</option>
+              <option value="allsvenskan2022">allsvenskan2022</option>
+              <option value="eevee">eevee</option>
+              <option value="pokemon">pokemon</option>
+              </select>
           <label for="computer-diff">Bot difficulty</label>
-          <select id="selectDiff">
+          <select name="selectDiff" id="selectDiff">
             <option value="easy">Easy</option>
-            <option value="easy">Hard</option>
+            <option value="hard">Hard</option>
           </select><br />
-          <button data-product="human">Local Multiplayer</button>
-          <button data-product="computer">vs Computer</button>
+          <select name="selectHuman" id="selectHuman">
+            <option value="1">Vs Human</option>
+            <option value="0">Vs Computer</option>
+            </select>
+            <input type="submit" value="play">
+        </form>
       </div>
       <div class="game">
 
@@ -38,9 +49,10 @@
 
   </div>
 </body>
-<script src="js/Player.js"></script>
-<script src="js/Card.js"></script>
-<script src="js/memDeck.js"></script>
-<script src="js/Game.js"></script>
-<script src="js/Main.js"></script>
+<script src="/js/deckArrays.js"></script>
+<script src="/js/Player.js"></script>
+<script src="/js/Card.js"></script>
+<script src="/js/memDeck.js"></script>
+<script src="/js/Game.js"></script>
+<script src="/js/Main.js"></script>
 </html>
