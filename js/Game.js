@@ -45,13 +45,21 @@ class Game {
     }
     
     eventHandler(div){
+    
         div.addEventListener('click', event => {
+            const player1 = new Player(this.playerconfig.player1name,true);
+            const player2 = new Player(this.playerconfig.player2name);
+
+            if(this.playerconfig.selectHuman == 0){
+                player2.human = false;
+            }
+    
+            console.log(player2.human)
             let eventTarget = event.target.getAttribute('data-value');
     
             const numOfFlippedCardsNodeList = document.querySelectorAll('.flip:not(.matched-card)');
             const numOfFlippedCards = Array.prototype.slice.call(numOfFlippedCardsNodeList)
-            
-           
+           console.log(player1.name)
             if (!div.classList.contains('flip')) {
                 div.classList.toggle('flip');
     
