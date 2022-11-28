@@ -23,7 +23,12 @@ body {
   font-weight: 400;
 }
 
-.container{}
+.container{
+
+  max-width: 900px;
+  background-color: #ebe6ee;
+  margin: 0 auto;
+}
 
 .bord{}
 
@@ -79,13 +84,19 @@ body {
 .playerForm{
   z-index: 1;
   position:absolute;
-  width:640px;
+  max-width:100%;
   height:640px ;
   background-color: #000;
 }
 
 .playermenu{}
 
+.scoreboard{
+  left:100%;
+  position:relative;
+  border: 5px solid rgb(5, 5, 5);
+  height: 500px;
+}
 .matched-card {
   border: 5px solid red;
 }

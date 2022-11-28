@@ -1,11 +1,9 @@
 class Player {
-    constructor(name, human = true,score) {
+    constructor(name, human = true) {
         this.name = name;
         this.choices = [];
         this.human = human;
-        this.score = score;
     }
-
     
    
 

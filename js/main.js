@@ -4,7 +4,7 @@ while(true){
     //Skapa objekt och variabler
 const menu = document.querySelector(".playerForm");
 const maincontainer = document.querySelector(".game")
-
+const scoreboard = document.querySelector(".scoreboard");
 
 
 
@@ -14,7 +14,7 @@ function getData(form) {
   const playerconfig = Object.fromEntries(formData);
   const game = new Game(playerconfig);
   game.createDeck(maincontainer);
-
+  game.createScoreboard(scoreboard);
   hide(menu);
 }
 document.getElementById("playerform").addEventListener("submit", function (e) {
