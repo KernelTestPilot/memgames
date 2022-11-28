@@ -122,7 +122,7 @@ class Game {
 
      checkComputer(){
         if (!this.roundCounter % 2 == 0 ) {             
-            let targetableCards = [...document.querySelectorAll('.card:not(.flip):not(.matched-card)')];
+            let targetableCards = [...document.querySelectorAll('.card:not(.matched-card)')];
             let randomPick = Math.floor(Math.random() * targetableCards.length);
             let randomPick2 = Math.floor(Math.random() * targetableCards.length);
             while(randomPick == randomPick2){
