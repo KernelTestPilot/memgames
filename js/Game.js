@@ -4,6 +4,7 @@ class Game {
         this.roundCounter = 0;
         this.player1score = 0;
         this.player2score = 0;
+        this.gamestate = true;
     }
 
     SetDeck() {
@@ -24,13 +25,17 @@ class Game {
     }
 
     createDeck(maincontainer) {
-        //nytt deck
+        const menu = document.querySelector(".playerForm");
+        this.hide(menu);
+        //nytt deck och spelare
+        console.log(this.playerconfig)
+        this.resetBoard()
         let choice = this.SetDeck();
-        const deck = new memDeck(choice);
+        let deck = new memDeck(choice);
         deck.createCards();
         deck.shuffleCards();
-        const player1 = new Player(this.playerconfig.player1name, true);
-        const player2 = new Player(this.playerconfig.player2name);
+        let player1 = new Player(this.playerconfig.player1name, true);
+        let player2 = new Player(this.playerconfig.player2name);
         if (this.playerconfig.selectHuman == 0) {
             player2.human = false;
         }
@@ -41,20 +46,22 @@ class Game {
             divcardfront.className = "card-front";
             let divcardback = document.createElement("div");
             divcardback.className = "card-back";
-
             divcardback.style.backgroundImage = "url(" + deck.memCards[i].backgroundimg + ")";
             divcardfront.dataset.value = deck.memCards[i].value;
-            //append allting 
             maincontainer.append(divcard);
             divcard.append(divcardfront);
             divcard.append(divcardback);
-            if (player2.human) {
-                this.eventHandler(divcard, player1, player2);
-            } else {
-                this.eventHandlerComputer(divcard, player1, player2)
-            }
+            this.eventHandler(divcard, player1, player2, deck);
         }
         this.createScoreboard();
+    }
+
+    resetBoard() {
+        this.player1score = 0;
+        this.player2score = 0;
+        document.querySelectorAll(".card").forEach(el => el.remove());
+        let scoreboard = document.querySelector(".updates");
+        scoreboard.innerHTML = "";
     }
 
     checkRandom(randomPick, randomPick2, targetableCards) {
@@ -65,7 +72,7 @@ class Game {
         }
     }
 
-    eventHandler(div, player1, player2) {
+    eventHandler(div, player1, player2, deck) {
         div.addEventListener('click', event => {
             let eventTarget = event.target.getAttribute('data-value');
             let flipCount = document.querySelectorAll('.flip:not(.matched-card)').length;
@@ -84,35 +91,14 @@ class Game {
                         numOfFlippedCards[1].classList.remove('flip');
                     }, 500)
                     this.roundCounter++;
+                    if (!player2.human) {
+                        this.checkComputer();
+                    }
                     this.createScoreboard();
                 }
             }
+            this.checkForWinner(deck);
         })
-    }
-
-    eventHandlerComputer(div, player1, player2) {
-        div.addEventListener('click', event => {
-            let eventTarget = event.target.getAttribute('data-value');
-            let flipCount = document.querySelectorAll('.flip:not(.matched-card)').length;
-            if (!div.classList.contains('flip') && flipCount < 2) {
-                div.classList.toggle('flip');
-                let numOfFlippedCards = [...document.querySelectorAll('.flip:not(.matched-card)')];
-                if (numOfFlippedCards.length == 2 && numOfFlippedCards[0].innerHTML == numOfFlippedCards[1].innerHTML) {
-                    numOfFlippedCards[0].classList.add('matched-card');
-                    numOfFlippedCards[1].classList.add('matched-card');
-                    this.scoreCount();
-                    this.createScoreboard();
-                } else if (numOfFlippedCards.length == 2) {
-                    setTimeout(() => {
-                        numOfFlippedCards[0].classList.remove('flip');
-                        numOfFlippedCards[1].classList.remove('flip');
-                    }, 500)
-                    this.roundCounter++;
-                    this.checkComputer();
-                }
-            }
-        }
-        )
     }
 
     checkComputer() {
@@ -128,7 +114,6 @@ class Game {
                 targetableCards[randomPick2].classList.add('flip');
                 this.createScoreboard();
                 if (targetableCards[randomPick].innerHTML == targetableCards[randomPick2].innerHTML) {
-
                     targetableCards[randomPick].classList.add('matched-card');
                     targetableCards[randomPick2].classList.add('matched-card');
                     this.scoreCount();
@@ -141,11 +126,29 @@ class Game {
                         this.roundCounter++;
                         this.createScoreboard();
                     }, 1000)
-
                 } this.createScoreboard();
             }, 1000)
         }
     }
+
+    checkForWinner(deck) {
+        const menu = document.querySelector(".playerForm");
+        let winnerSum = deck.memCards.length / 4;
+        console.log(winnerSum);
+        if (winnerSum < this.player1score) {
+            alert(this.playerconfig.player1name + " WINNER");
+            this.show(menu);
+        } if (winnerSum < this.player2score) {
+            this.show(menu);
+            alert(this.playerconfig.player2name + " WINNER");
+        } if (winnerSum <= this.player2score) {
+            if (winnerSum <= this.player1score) {
+                alert("DRAW");
+                this.show(menu);
+            }
+        }
+    }
+
     scoreCount() {
         let scoreboard = document.querySelector(".updates");
         let updates = document.createElement("div");
@@ -159,7 +162,7 @@ class Game {
             scoreboard.append(updates)
         }
     }
-    
+
     createScoreboard() {
         const scoreboard = document.querySelector(".scoreboard");
         let currentplayer = document.createElement("div");
@@ -184,5 +187,18 @@ class Game {
         scoreboard.append(player2name)
         scoreboard.append(player2score)
 
+    }
+    show(elements, specifiedDisplay) {
+        elements = elements.length ? elements : [elements];
+        for (let index = 0; index < elements.length; index++) {
+            elements[index].style.display = specifiedDisplay || 'block';
+        }
+    }
+
+    hide(elements) {
+        elements = elements.length ? elements : [elements];
+        for (let index = 0; index < elements.length; index++) {
+            elements[index].style.display = 'none';
+        }
     }
 }

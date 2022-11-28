@@ -3,6 +3,4 @@ class Card {
         this.value = value;
         this.backgroundimg = backgroundimg;
     }
-
-
 } 
