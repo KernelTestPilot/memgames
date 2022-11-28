@@ -92,11 +92,19 @@ body {
 .playermenu{}
 
 .scoreboard{
-  left:100%;
-  position:relative;
+  left:90%;
+  max-width: 100%;
+  position:absolute;
   border: 5px solid rgb(5, 5, 5);
   height: 500px;
 }
 .matched-card {
   border: 5px solid red;
+}
+
+.updates{
+  border: 5px solid rgb(8, 8, 8);
+  height: 500px;
+
+max-width: 100%;
 }

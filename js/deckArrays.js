@@ -4,14 +4,7 @@ const decks = {
     "img/dif/elias_andersson_2022.jpg", 
     "img/dif/gustav_wikheim_2022.jpg", 
     "img/dif/hampus_finndell_2022.jpg", 
-    "img/dif/hjalmar_ekdal-2022.jpg", 
-    "img/dif/jacob_widell_zetterstrom_2022.jpg", 
-    "img/dif/joel_asoro_2022.jpg", 
-    "img/dif/magnus_eriksson_2022.jpg", 
-    "img/dif/piotr_johansson_2022.jpg", 
-    "img/dif/rasmus_schuller_2022.jpg", 
-    "img/dif/victor_edvardsen_2022.jpg",
-    "img/dif/marcus_danielsson_2022.jpg",
+
 ],
 
  allsvenskan2022: [
