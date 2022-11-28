@@ -125,12 +125,15 @@ class Game {
             let targetableCards = [...document.querySelectorAll('.card:not(.flip):not(.matched-card)')];
             let randomPick = Math.floor(Math.random() * targetableCards.length);
             let randomPick2 = Math.floor(Math.random() * targetableCards.length);
-            if (randomPick == randomPick2 && randomPick2 < targetableCards.length) {
+            while(randomPick == randomPick2){
+                randomPick2 = Math.floor(Math.random() * targetableCards.length);
+            }
+           /* if (randomPick == randomPick2 && randomPick2 < targetableCards.length) {
                 randomPick2 += 1;
             } else if (randomPick == randomPick2 && randomPick2 >= targetableCards.length) {
                 randomPick2 -= targetableCards.length;
             }
-         
+         */
             setTimeout(() => {
                 targetableCards[randomPick].classList.add('flip');
                 targetableCards[randomPick2].classList.add('flip');
