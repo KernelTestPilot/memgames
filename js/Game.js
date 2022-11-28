@@ -110,7 +110,6 @@ class Game {
                         }, 500)
                    
                         this.roundCounter++;
-                        
                         this.checkComputer();
                     }
                     
