@@ -92,26 +92,29 @@ body {
   z-index: 1;
   position:absolute;
   max-width:100%;
-  height:640px ;
+  height:100px ;
   background-color: #000;
+  bottom:55%;
+  max-width: 100%;
 }
 
 .playermenu{}
 
 .scoreboard{
+  
+  background-color: var(--text-color);
   left:90%;
   max-width: 100%;
   position:absolute;
-  border: 5px solid rgb(5, 5, 5);
-  height: 500px;
+  height: 200px;
 }
 .matched-card {
   border: 5px solid red;
 }
 
 .updates{
-  border: 5px solid rgb(8, 8, 8);
-  height: 500px;
+  background-color: var(--board-bg-color);
+  height: 200px;
 
 max-width: 100%;
 }

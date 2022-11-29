@@ -4,7 +4,6 @@ class Game {
         this.roundCounter = 0;
         this.player1score = 0;
         this.player2score = 0;
-        this.gamestate = true;
     }
 
     SetDeck() {
@@ -27,8 +26,6 @@ class Game {
     createDeck(maincontainer) {
         const menu = document.querySelector(".playerForm");
         this.hide(menu);
-        //nytt deck och spelare
-        console.log(this.playerconfig)
         this.resetBoard()
         let choice = this.SetDeck();
         let deck = new memDeck(choice);
@@ -64,14 +61,6 @@ class Game {
         scoreboard.innerHTML = "";
     }
 
-    checkRandom(randomPick, randomPick2, targetableCards) {
-        if (randomPick == randomPick2 && randomPick2 < targetableCards.length) {
-            randomPick2 += 1;
-        } else if (randomPick == randomPick2 && randomPick2 >= targetableCards.length) {
-            randomPick2 -= targetableCards.length;
-        }
-    }
-
     eventHandler(div, player1, player2, deck) {
         div.addEventListener('click', event => {
             let eventTarget = event.target.getAttribute('data-value');
@@ -85,6 +74,7 @@ class Game {
                     numOfFlippedCards[1].classList.add('matched-card');
                     this.scoreCount();
                     this.createScoreboard();
+                    this.checkForWinner(deck);
                 } else if (numOfFlippedCards.length == 2) {
                     setTimeout(() => {
                         numOfFlippedCards[0].classList.remove('flip');
@@ -97,7 +87,8 @@ class Game {
                     this.createScoreboard();
                 }
             }
-            this.checkForWinner(deck);
+            
+          
         })
     }
 
@@ -131,19 +122,23 @@ class Game {
         }
     }
 
-    checkForWinner(deck) {
+    checkForWinner(deck) {  
         const menu = document.querySelector(".playerForm");
+        const updates = document.querySelector(".updates");
+        let h1 = document.createElement("h1");
         let winnerSum = deck.memCards.length / 4;
-        console.log(winnerSum);
         if (winnerSum < this.player1score) {
-            alert(this.playerconfig.player1name + " WINNER");
+            h1.innerText=this.playerconfig.player1name + " WINNER";
+            updates.append(h1);
             this.show(menu);
         } if (winnerSum < this.player2score) {
+            h1.innerText=this.playerconfig.player2name + " WINNER";
+            updates.append(h1);
             this.show(menu);
-            alert(this.playerconfig.player2name + " WINNER");
         } if (winnerSum <= this.player2score) {
             if (winnerSum <= this.player1score) {
-                alert("DRAW");
+                h1.innerText="OAVGJORT";
+                updates.append(h1);
                 this.show(menu);
             }
         }
@@ -165,17 +160,17 @@ class Game {
 
     createScoreboard() {
         const scoreboard = document.querySelector(".scoreboard");
-        let currentplayer = document.createElement("div");
+        let currentplayer = document.createElement("h2");
         scoreboard.innerHTML = "";
         if (this.roundCounter % 2 == 0) {
-            currentplayer.innerHTML = "Just nu är det " + this.playerconfig.player1name + " tur <br></br>";
+            currentplayer.innerHTML = this.playerconfig.player1name + " TURN <br></br>"
             scoreboard.append(currentplayer)
         } else {
-            currentplayer.innerHTML = "Just nu är det " + this.playerconfig.player2name + " tur <br></br>";
+            currentplayer.innerHTML = this.playerconfig.player2name + " TURN <br></br>"
             scoreboard.append(currentplayer)
         }
-        let player1score = document.createElement("div");
-        let player2score = document.createElement("div");
+        let player1score = document.createElement("h3");
+        let player2score = document.createElement("h3");
         let player1name = document.createElement("div");
         let player2name = document.createElement("div");
         player1score.innerHTML = this.player1score;
@@ -201,4 +196,5 @@ class Game {
             elements[index].style.display = 'none';
         }
     }
+
 }
