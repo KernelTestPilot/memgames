@@ -36,6 +36,11 @@ class Game {
         if (this.playerconfig.selectHuman == 0) {
             player2.human = false;
         }
+        this.createDOMCards(deck,player1,player2);
+        this.createScoreboard();
+    }
+
+    createDOMCards(deck,player1,player2){
         for (var i = 0; i < deck.memCards.length; i++) {
             let divcard = document.createElement("div");
             divcard.className = "card";
@@ -50,7 +55,6 @@ class Game {
             divcard.append(divcardback);
             this.eventHandler(divcard, player1, player2, deck);
         }
-        this.createScoreboard();
     }
 
     resetBoard() {
@@ -65,7 +69,7 @@ class Game {
         div.addEventListener('click', event => {
             let eventTarget = event.target.getAttribute('data-value');
             let flipCount = document.querySelectorAll('.flip:not(.matched-card)').length;
-            if (!div.classList.contains('flip') && flipCount < 2) {
+            if (!div.classList.contains('flip') && flipCount < 2 && player1.human) {
                 div.classList.toggle('flip');
                 const numOfFlippedCardsNodeList = document.querySelectorAll('.flip:not(.matched-card)');
                 const numOfFlippedCards = Array.prototype.slice.call(numOfFlippedCardsNodeList)
@@ -82,44 +86,45 @@ class Game {
                     }, 500)
                     this.roundCounter++;
                     if (!player2.human) {
-                        this.checkComputer();
+                        player1.human = false;
+                        this.checkComputer(deck,player1, player2);
                     }
                     this.createScoreboard();
                 }
             }
-            
-          
         })
     }
 
-    checkComputer() {
-        if (!this.roundCounter % 2 == 0) {
-            let targetableCards = [...document.querySelectorAll('.card:not(.matched-card)')];
-            let randomPick = Math.floor(Math.random() * targetableCards.length);
-            let randomPick2 = Math.floor(Math.random() * targetableCards.length);
-            while (randomPick == randomPick2) {
-                randomPick2 = Math.floor(Math.random() * targetableCards.length);
-            }
-            setTimeout(() => {
-                targetableCards[randomPick].classList.add('flip');
-                targetableCards[randomPick2].classList.add('flip');
-                this.createScoreboard();
-                if (targetableCards[randomPick].innerHTML == targetableCards[randomPick2].innerHTML) {
-                    targetableCards[randomPick].classList.add('matched-card');
-                    targetableCards[randomPick2].classList.add('matched-card');
-                    this.scoreCount();
-                    this.createScoreboard();
-                    this.roundCounter++;
-                } else {
-                    setTimeout(() => {
-                        targetableCards[randomPick].classList.remove('flip');
-                        targetableCards[randomPick2].classList.remove('flip');
-                        this.roundCounter++;
-                        this.createScoreboard();
-                    }, 1000)
-                } this.createScoreboard();
-            }, 1000)
+    checkComputer(deck, player1, player2) {
+        let targetableCards = [...document.querySelectorAll('.card:not(.matched-card)')];
+        let randomPick = Math.floor(Math.random() * targetableCards.length);
+        let randomPick2 = Math.floor(Math.random() * targetableCards.length);
+        while (randomPick == randomPick2) {
+            randomPick2 = Math.floor(Math.random() * targetableCards.length);
         }
+        setTimeout(() => {
+            targetableCards[randomPick].classList.add('flip');
+            targetableCards[randomPick2].classList.add('flip');
+            this.createScoreboard();
+            if (targetableCards[randomPick].innerHTML == targetableCards[randomPick2].innerHTML) {
+                targetableCards[randomPick].classList.add('matched-card');
+                targetableCards[randomPick2].classList.add('matched-card');
+                this.scoreCount();
+                this.createScoreboard();
+                this.checkForWinner(deck);
+                if (targetableCards.length > 3) {
+                    this.checkComputer(deck,player1, player2);
+                }
+            } else {
+                setTimeout(() => {
+                    targetableCards[randomPick].classList.remove('flip');
+                    targetableCards[randomPick2].classList.remove('flip');
+                    this.roundCounter++;
+                    this.createScoreboard();
+                    player1.human = true;
+                }, 1000)
+            } this.createScoreboard();
+        }, 1000)
     }
 
     checkForWinner(deck) {  
@@ -177,12 +182,10 @@ class Game {
         player2score.innerHTML = this.player2score;
         player1name.innerHTML = this.playerconfig.player1name;
         player2name.innerHTML = this.playerconfig.player2name;
-        scoreboard.append(player1name)
-        scoreboard.append(player1score)
-        scoreboard.append(player2name)
-        scoreboard.append(player2score)
+        scoreboard.append(player1name, player1score,player2name,player2score)
 
     }
+
     show(elements, specifiedDisplay) {
         elements = elements.length ? elements : [elements];
         for (let index = 0; index < elements.length; index++) {
