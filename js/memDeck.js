@@ -7,16 +7,15 @@ class memDeck {
     createCards() {
         for (let i = 0; i < this.deckChoice.length; i++) {
             let backgroundimg = this.deckChoice[i];
-            this.memCards.push(new Card(this.deckChoice[i], backgroundimg));
-            this.memCards.push(new Card(this.deckChoice[i], backgroundimg));
+            this.memCards.push(new Card(i, backgroundimg));
+            this.memCards.push(new Card(i, backgroundimg));
         }
     }
 
     shuffleCards() {
-        let array = this.memCards;
-        for (let i = array.length - 1; i > 0; i--) {
+        for (let i = this.memCards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+            [this.memCards[i], this.memCards[j]] = [this.memCards[j], this.memCards[i]];
         }
     }
 }
