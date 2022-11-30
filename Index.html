@@ -16,9 +16,9 @@
    
     <header><h2>Memory spel</h2></header>
     <div  class="bord">
+      
       <div class="playerForm">
         <form id="playerform" name="playerform" action="">
- 
             <label>Name:<input id="palyer1name" name="player1name" value="player1"></label>
             <label>Name:<input id="player2name" name="player2name" value="player2"></label>
             <label for="deck">Choose your deck</label>
@@ -28,16 +28,18 @@
               <option value="eevee">eevee</option>
               <option value="pokemon">pokemon</option>
               </select>
+              <br>
           <label for="computer-diff">Bot difficulty</label>
+      
           <select name="selectDiff" id="selectDiff">
             <option value="easy">Easy</option>
             <option value="hard">Hard</option>
-          </select><br />
+          </select>
           <select name="selectHuman" id="selectHuman">
             <option value="1">Vs Human</option>
             <option value="0">Vs Computer</option>
             </select>
-            <input type="submit" value="play">
+            <input class="button" type="submit" value="play">
         </form>
       </div>
       <div class="game">

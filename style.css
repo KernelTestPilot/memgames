@@ -22,8 +22,6 @@
 
 body {
   background-color: var(--main-bg-color);
-  color: var(--text-color);
-  text-shadow: 2px 2px #000;
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   display: block; 
@@ -31,13 +29,14 @@ body {
 }
 
 .container{
-
   max-width: 900px;
   background-color: #ebe6ee;
   margin: 0 auto;
 }
 
-.bord{}
+.bord{
+  background-color: var(--board-bg-color);
+}
 
 .game{
   background-color: var(--board-bg-color);
@@ -101,8 +100,7 @@ body {
 .playermenu{}
 
 .scoreboard{
-  
-  background-color: var(--text-color);
+  background-color: var(--board-bg-color);
   left:90%;
   max-width: 100%;
   position:absolute;
@@ -117,4 +115,36 @@ body {
   height: 200px;
 
 max-width: 100%;
+}
+input{
+outline:none;
+border:none;
+background: #fff;
+padding: 10px 25px;
+border-radius: 1rem 1rem 1rem 1rem;
+align-items: center;
+z-index: 1;
+}
+select{
+  outline:none;
+  border:none;
+  background: #fff;
+  padding: 10px 25px;
+  border-radius: 1rem 1rem 1rem 1rem;
+  align-items: center;
+  z-index: 1;
+  }
+.button {
+  font-weight: 600;
+ font-size: large;
+  margin:auto;
+  margin-top: 2%;
+  text-align: center;
+  width: 50%;
+   border:none;
+  background:var(--board-bg-color);
+   color: #ededf1;
+   padding: 10px 25px;
+   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+   cursor:pointer;
 }
